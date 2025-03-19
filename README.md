@@ -6,15 +6,15 @@ This project provides Docker images to periodically back up a PostgreSQL databas
 ```yaml
 services:
   postgres:
-    image: postgres:16
+    image: postgres:17
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
 
   backup:
-    image: eeshugerman/postgres-backup-s3:16
+    image: eeshugerman/postgres-backup-s3:17
     environment:
-      SCHEDULE: '@weekly'     # optional
+      SCHEDULE: '@daily'      # optional
       BACKUP_KEEP_DAYS: 7     # optional
       PASSPHRASE: passphrase  # optional
       S3_REGION: region
@@ -66,22 +66,5 @@ docker compose up -d
 ```
 
 # Acknowledgements
-This project is a fork and re-structuring of @schickling's [postgres-backup-s3](https://github.com/schickling/dockerfiles/tree/master/postgres-backup-s3) and [postgres-restore-s3](https://github.com/schickling/dockerfiles/tree/master/postgres-restore-s3).
-
-## Fork goals
-These changes would have been difficult or impossible merge into @schickling's repo or similarly-structured forks.
-  - dedicated repository
-  - automated builds
-  - support multiple PostgreSQL versions
-  - backup and restore with one image
-
-## Other changes and features
-  - some environment variables renamed or removed
-  - uses `pg_dump`'s `custom` format (see [docs](https://www.postgresql.org/docs/10/app-pgdump.html))
-  - drop and re-create all database objects on restore
-  - backup blobs and all schemas by default
-  - no Python 2 dependencies
-  - filter backups on S3 by database name
-  - support encrypted (password-protected) backups
-  - support for restoring from a specific backup by timestamp
-  - support for auto-removal of old backups
+This project is a fork and re-structuring of [eeshugerman/postgres-backup-s3](https://github.com/eeshugerman/postgres-backup-s3)
+with the main goal to support newer versions of the PostgreSQL for my personal use-cases
